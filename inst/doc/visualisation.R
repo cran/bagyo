@@ -76,15 +76,17 @@ bagyo |>
     panel.grid.minor.y = element_blank()
   )
 
-## ----scatterplot1, fig.align = "center", fig.height = 5, fig.width = 8--------
-## Cyclone speed by presssure ----
+## ----scatterplot1, fig.align = "center", fig.height = 6, fig.width = 8--------
+## Cyclone speed by pressure ----
 bagyo |>
   dplyr::mutate(year = factor(year)) |>
   ggplot(mapping = aes(x = speed, y = pressure)) +
   geom_point(mapping = aes(colour = category_name), size = 3, alpha = 0.5) +
   scale_colour_manual(
     name = NULL,
-    values = c("#9c5e60", "#4b876e", "#465b92", "#e5be72", "#5d0505")
+    values = c(
+      "#9c5e60", "#4b876e", "#465b92", "#e5be72", "#5d0505"
+    )
   ) +
   labs(
     title = "Cyclone maximum sustained wind speed and maximum central pressure",
@@ -92,7 +94,7 @@ bagyo |>
     x = "wind speed (km/h)",
     y = "central pressure (hPa)"
   ) +
-  facet_wrap(. ~ year, ncol = 4) +
+  facet_wrap(. ~ year, ncol = 3) +
   theme_bw() +
   theme(
     legend.position = "top",
@@ -103,7 +105,7 @@ bagyo |>
     panel.grid.minor = element_blank()
   )
 
-## ----scatterplot2, fig.align = "center", fig.height = 5-----------------------
+## ----scatterplot2, fig.align = "center", fig.height = 6-----------------------
 bagyo |>
   mutate(
     year = factor(year),
@@ -117,19 +119,22 @@ bagyo |>
     mapping = aes(colour = year), method = "lm", se = FALSE, linewidth = 0.75
   ) +
   scale_colour_manual(
-    values = c("#9c5e60", "#4b876e", "#465b92", "#e5be72")
+    values = c(
+      "#9c5e60", "#4b876e", "#465b92", 
+      "#e5be72", "#5d0505", "#5630d3"
+    )
   ) +
-  scale_shape_manual(values = 15:18) +
+  scale_shape_manual(values = c(15:19, 8)) +
   labs(
     title = "Maximum sustained wind speed by duration of cyclones",
-    subtitle = "2017-2020",
+    subtitle = "2017-2021",
     x = "speed (km/h)", y = "duration (hours)",
     colour = "Year", shape = "Year"
   ) +
   theme_minimal() +
   theme(legend.position = "top")
 
-## ----time-series, fig.align = "center", fig.height = 4, fig.width = 8---------
+## ----time-series, fig.align = "center", fig.height = 6, fig.width = 8---------
 ## Get number of cyclones per month by year and plot ----
 bagyo |>
   mutate(month = month(start, label = TRUE)) |>
@@ -143,11 +148,11 @@ bagyo |>
   scale_y_continuous(breaks = seq(from = 0, to = 6, by = 1)) +
   labs(
     title = "Number of cyclones over time",
-    subtitle = "2017-2020",
+    subtitle = "2017-2021",
     x = NULL,
     y = "n"
   ) +
-  facet_wrap(. ~ year, ncol = 4) +
+  facet_wrap(. ~ year, ncol = 3) +
   theme_bw() +
   theme(
     strip.background = element_rect(
@@ -166,7 +171,7 @@ bagyo |>
   geom_boxplot(colour = "#4b876e", fill = "#4b876e", alpha = 0.5) +
   labs(
     title = "Distribution of tropical cyclone maximum sustained wind speed",
-    subtitle = "2017-2022",
+    subtitle = "2017-2021",
     x = NULL, y = "speed (km/h)"
   ) +
   theme_minimal() +
@@ -183,7 +188,7 @@ bagyo |>
   ) +
   labs(
     title = "Distribution of tropical cyclone maximum sustained wind speed",
-    subtitle = "2017-2022",
+    subtitle = "2017-2021",
     x = NULL, y = "speed (km/h)"
   ) +
   theme_minimal() +
@@ -197,7 +202,7 @@ bagyo |>
   geom_jitter(colour = "#4b876e", size = 3, width = 0.2) +
   labs(
     title = "Distribution of tropical cyclone maximum sustained wind speed",
-    subtitle = "2017-2022",
+    subtitle = "2017-2021",
     x = NULL, y = "speed (km/h)"
   ) +
   theme_minimal() +
